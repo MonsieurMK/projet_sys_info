@@ -6,7 +6,7 @@
 %option noyywrap
 
 %%
-[ \t]+	{;}
+[ \t]+	{}
 "main" { return tMAIN }
 
 "if" { return tIF; }
@@ -46,9 +46,9 @@
 
 [ ]*[/t]*[,]* {}
 
-\n	{ return tFL; }
+\n	{}
 
 [a-zA-Z]([a-zA-Z]*[0-9]*[_]*)* {
-        yylval.var = yytext[0];
-        return tVAR;
+        yylval.var = yytext;
+        return tNOM;
 	}
