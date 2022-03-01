@@ -13,17 +13,17 @@ void yyerror(char *s);
 %start Compilateur
 %%
 
-Compilateur : Main;
+Compilateur : Main ;
 Main : tMAIN tPO tPF tAO CorpsProgramme tAF ;
 CorpsProgramme : Instruction tPV CorpsProgramme ;
 Instruction : Constante | Variable | Affectation | If | While ;
-Constante : tCONST tNOM tAFFECT tENTIER ;
-Variable : tINT tNOM | tINT tNOM tAFFECT tENTIER ;
-Affectation : tNOM tAFFECT tENTIER | tNOM tAFFECT Expression ;
+Constante : tCONST tNOM tAFFECT tENTIER { printf("declaration de constante\n"); } ;
+Variable : tINT tNOM | tINT tNOM tAFFECT tENTIER { printf("declaration de variable\n"); } ;
+Affectation : tNOM tAFFECT tENTIER | tNOM tAFFECT Expression { printf("affectation de variable\n"); } ;
 Expression : Operande Operateur Operande ;
 Operande : tENTIER | tNOM ;
 Operateur : tADD | tSOU | tMUL | tDIV ;
-If : tIF tPO Operande tEGAL Operande tPF tAO CorpsProgramme tAF ;
-While : tWHI tPO Operande tEGAL Operande tPF tAO CorpsProgramme tAF ;
+If : tIF tPO Operande tEGAL Operande tPF tAO CorpsProgramme tAF { printf("IF lu\n"); } ;
+While : tWHI tPO Operande tEGAL Operande tPF tAO CorpsProgramme tAF { printf("WHILE lu\n"); } ;
  
 %%
