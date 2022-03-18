@@ -1,11 +1,11 @@
-GRM=test.y
-LEX=test.l
-BIN=calc
+GRM=comp.y
+LEX=comp.l
+BIN=comp
 
 CC=gcc
 CFLAGS=-Wall -g
 
-OBJ=y.tab.o lex.yy.o main.o
+OBJ=y.tab.o lex.yy.o #main.o
 
 all: $(BIN)
 
