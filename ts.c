@@ -1,9 +1,43 @@
 #include "ts.h"
 
-void ajouter(char * nom, int prof) {
-    table
+void initTableSymboles() 
+{
+    indice = 0;
+    tableSymboles = malloc(sizeof(symbole) * TAILLE_TABLEAU);
 }
 
-void affecter(char * nom, void * pt);
+void libererTableSymboles()
+{
+    free(tableSymboles);
+    indice = 0;
+}
 
-Symbole getSymbole(char * nom);
+int ajouterSymbole(char * nom, int prof) 
+{
+    for (int i = 0; i < indice; i++)
+    {
+        if (strcmp(nom, tableSymboles[i].nom) == 0)
+        {
+            return -1;
+        }
+    }
+    
+    tableSymboles[indice] = (symbole) { nom, prof };
+    printf("tableSymboles[%d]=%s\n", indice, tableSymboles[indice].nom);
+    indice++;
+
+    return indice;
+}
+
+int chercherSymbole(char * nom) 
+{
+    for (int i = 0; i < indice; i++)
+    {
+        if (strcmp(nom, tableSymboles[i].nom) == 0)
+        {
+            return i;
+        }
+    }
+    
+    return -1;
+}

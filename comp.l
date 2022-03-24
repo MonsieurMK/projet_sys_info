@@ -50,6 +50,6 @@
 \n	{}
 
 [a-zA-Z]([a-zA-Z]*[0-9]*[_]*)* {
-        yylval.var = yytext;
+        yylval.var = strdup(yytext);
         return tNOM;
 	}

@@ -1,7 +1,9 @@
 %{
 #include <stdlib.h>
 #include <stdio.h>
-int var[26];
+#include "ts.h"
+
+int vars[TAILLE_TABLEAU];
 void yyerror(char *s);
 %}
 
@@ -11,7 +13,7 @@ void yyerror(char *s);
 %token tVOID tAFFECT tSOU tADD tMUL tDIV
 %token <entier> tENTIER
 %token <var> tNOM
-//%type <entier> Operande
+%type <entier> Operande Expression
 %start Compilateur
 
 %%
@@ -21,20 +23,37 @@ Compilateur :       Main ;
 Main :              tMAIN tPO tPF tAO CorpsProgramme tAF;
 
 CorpsProgramme :    Instruction CorpsProgramme | Instruction ;
+
 Instruction :       Constante | Variable | Affectation | If | While ;
 
 Constante :         tCONST tNOM tAFFECT tENTIER tPV { printf("declaration de constante\n"); } ;
 
-Variable :          tINT tNOM tAFFECT tENTIER tPV { printf("declaration de variable et affectation\n"); } 
-                    | tINT tNOM tPV { printf("declaration de variable\n"); } ;
+Variable :          tINT tNOM tAFFECT tENTIER tPV // peut prendre valeur de expr et operande
+                    { 
+                      int result = ajouterSymbole($2, 0);
+                      if(result == -1) {
+                          yyerror("variable deja declaree");
+                      } else {
+                        vars[result] = $4;
+                      }
+                    } 
+                    | tINT tNOM tPV 
+                    { 
+                      int result = ajouterSymbole($2, 0);
+                      if(result == -1) {
+                          yyerror("variable deja declaree");
+                      } else {
+                        vars[result] = 0;
+                      }
+                    } ;
 
 Affectation :       tNOM tAFFECT tENTIER tPV { printf("affectation de variable\n"); } 
                     | tNOM tAFFECT Expression tPV { printf("affectation de variable\n"); } ;
 
 Expression :        Operande tADD Operande /*{ printf("addition %d + %d", $1, $3); }*/ ;
 
-Operande :          tENTIER
-                    | tNOM ;
+Operande :          tENTIER { return $$; }
+                    | tNOM { return $$; } ;
 
 /* Operateur :         tADD { $$ = ;} | tSOU | tMUL | tDIV ; */
 
@@ -54,6 +73,7 @@ Condition :         tENTIER
 void yyerror(char *s) { fprintf(stderr, "%s\n", s); }
 int main(void) {
   printf("Compilateur\n"); // yydebug = 1;
+  initTableSymboles();
   yyparse();
   return 0;
 }
