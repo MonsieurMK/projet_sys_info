@@ -41,3 +41,13 @@ int chercherSymbole(char * nom)
     
     return -1;
 }
+
+int getAddresse(char * nom)
+{
+    int indice = chercherSymbole(nom)
+    if (indice == -1)
+    {
+        return -1;
+    }
+    return indice * sizeof(int);
+}

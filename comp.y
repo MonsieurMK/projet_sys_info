@@ -4,6 +4,7 @@
 #include "ts.h"
 
 int * vars;
+int * stackPointer;
 void yyerror(char *s);
 %}
 
@@ -17,7 +18,8 @@ void yyerror(char *s);
 %start Compilateur
 
 %right tAFFECT
-%left tADD
+%left tADD tSOU
+%left tMUL tDIV
 
 %%
 
@@ -33,64 +35,117 @@ Constante :         tCONST tNOM tAFFECT tENTIER tPV { printf("declaration de con
 
 Variable :          tINT tNOM tAFFECT Expression tPV // peut prendre valeur de expr et operande
                     { 
-                      printf("affect expression\n");
                       int result = ajouterSymbole($2, 0);
                       if(result == -1) {
                           yyerror("variable deja declaree");
                       } else {
-                        vars[result] = $4;
-                        printf("vars result=%d, result=%d\n", vars[result], result);
+                        //vars[result] = $4;
+                        printf("AFC %d %d\n", result * sizeof(int), $4);
                       }
                     } 
-                    /*|tINT tNOM tAFFECT Operande tPV // peut prendre valeur de expr et operande
-                    { 
-                      printf("operande detectee\n");
-                      int result = ajouterSymbole($2, 0);
-                      if(result == -1) {
-                          yyerror("variable deja declaree");
-                      } else {
-                        vars[result] = $4;
-                        printf("vars result=%d, result=%d\n", vars[result], result);
-                      }
-                    } */
                     | tINT tNOM tPV 
                     { 
-                      printf("declaration\n");
                       int result = ajouterSymbole($2, 0);
                       if(result == -1) {
                           yyerror("variable deja declaree");
                       } else {
-                        vars[result] = 0;
+                        //vars[result] = 0;
+                        printf("AFC %d 0\n", result * sizeof(int));
                       }
                     } ;
                     
 
-Affectation :       tNOM tAFFECT tENTIER tPV { printf("affectation de variable\n"); } 
-                    | tNOM tAFFECT Expression tPV { printf("affectation de variable\n"); } ;
+Affectation :       tNOM tAFFECT Expression tPV { 
+                      printf("affect expression\n");
+                      int result = chercherSymbole($1);
+                      if(result == -1) {
+                          yyerror("variable non declaree");
+                      } else {
+                        //vars[result] = $3;
+                        printf("AFC %d %d\n", result * sizeof(int), $3);
+                      }
+                    } ;
 
-Expression :        Expression tADD Expression
+Expression :        tPO Expression tADD Expression tPF
                     { 
-                      printf("addition=%d+%d=%d\n", $1, $3, $1 + $3); return ($1 + $3); 
+                      //$$=$2+$4;
+                      printf("ADD %d %d %d\n", getAddresse($2), $2, $4);
+                    }
+                    |tPO Expression tSOU Expression tPF
+                    {
+                      //$$=$2-$4;
+                      printf("SOU %d %d %d\n", getAddresse($2), $2, $4));
+                    }
+                    |tPO Expression tMUL Expression tPF
+                    {
+                      //$$=$2*$4;
+                      printf("MUL %d %d %d\n", getAddresse($2), $2, $4));
+                    }
+                    |tPO Expression tDIV Expression tPF
+                    {
+                      if($4 == 0) {
+                        yyerror("division par zero\n");
+                        //$$=0;
+                      } else {
+                        //$$=$2/$4;
+                        printf("DIV %d %d %d\n", getAddresse($2), $2, $4));
+                      }
+                    }
+
+                    |Expression tADD Expression
+                    { 
+                      //$$=$1+$3;
+                      printf("ADD %d %d %d\n", getAddresse($1), $1, $3);
+                    }
+                    | Expression tSOU Expression
+                    {
+                      //$$=$1-$3;
+                      printf("SOU %d %d %d\n", getAddresse($1), $1, $3));
+                    }
+                    }
+                    | Expression tMUL Expression
+                    {
+                      //$$=$1*$3;
+                      printf("MUL %d %d %d\n", getAddresse($1), $1, $3));
+                    }
+                    | Expression tDIV Expression
+                    {
+                      if($4 == 0) {
+                        yyerror("division par zero\n");
+                        //$$=0;
+                      } else {
+                        //$$=$2/$4;
+                        printf("DIV %d %d %d\n", getAddresse($1), $1, $3));
+                      }
                     }
                     |Operande;
 
 Operande :          tENTIER
+                    {
+                      // addresse temporaire (quelle addresse ? stack pointer ?)
+                      // TODO push and pop
+                      printf("STORE %d %d\n", stackPointer, $1)
+                    }
                     | tNOM 
                     { 
-                      printf("operande2 %s\n", $1);
-                      int index = chercherSymbole($1); 
+                      /*int index = chercherSymbole($1); 
                       if (index == -1)
                       {
                         yyerror("variable non declaree");
                       } else {
-                        printf("returned %d\n", vars[index]);
-                        return vars[index];
+                        $$=vars[index];
+                      }*/
+                      int addr = getAddresse($1);
+                      if (addr == -1) {
+                        yyerror("variable non declaree\n");
+                      } else {
+                        $$ = addr;
                       }
                     } ;
 
 /* Operateur :         tADD { $$ = ;} | tSOU | tMUL | tDIV ; */
 
-If :                tIF tPO Condition tPF tAO CorpsProgramme tAF { printf("IF lu\n"); }
+If :                tIF tPO Condition tPF tAO CorpsProgramme tAF { printf("IF lu\n");}
                     | If tELSE If { printf("IF ELSE lu\n"); } 
                     | If tELSE tAO CorpsProgramme tAF { printf("ELSE lu\n"); } ;
 

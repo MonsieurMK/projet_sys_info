@@ -33,4 +33,6 @@ int ajouterSymbole(char * nom, int prof);
 // retourne -1 si le symbole n'est pas présent
 int chercherSymbole(char * nom);
 
+int getAddresse(char * nom);
+
 #endif

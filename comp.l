@@ -30,6 +30,12 @@
 "int" { return tINT; }
 "const" { return tCONST; }
 
+"="	{ return tAFFECT; }
+"-"	{ return tSOU; }
+"+"	{ return tADD; }
+"*"	{ return tMUL; }
+"/"	{ return tDIV; }
+
 \/\/.*$ { return tCOMM; }
 
 "void" { return tVOID; }
@@ -39,13 +45,9 @@
         return tENTIER;
     }
 
-"="	{ return tAFFECT; }
-"-"	{ return tSOU; }
-"+"	{ return tADD; }
-"*"	{ return tMUL; }
-"/"	{ return tDIV; }
 
-[ ]*[/t]*[,]* {}
+
+[ ]*[\t]*[,]* {}
 
 \n	{}
 
