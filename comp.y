@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "ts.h"
 
-int vars[TAILLE_TABLEAU];
+int * vars;
 void yyerror(char *s);
 %}
 
@@ -15,6 +15,9 @@ void yyerror(char *s);
 %token <var> tNOM
 %type <entier> Operande Expression
 %start Compilateur
+
+%right tAFFECT
+%left tADD
 
 %%
 
@@ -28,17 +31,31 @@ Instruction :       Constante | Variable | Affectation | If | While ;
 
 Constante :         tCONST tNOM tAFFECT tENTIER tPV { printf("declaration de constante\n"); } ;
 
-Variable :          tINT tNOM tAFFECT tENTIER tPV // peut prendre valeur de expr et operande
+Variable :          tINT tNOM tAFFECT Expression tPV // peut prendre valeur de expr et operande
                     { 
+                      printf("affect expression\n");
                       int result = ajouterSymbole($2, 0);
                       if(result == -1) {
                           yyerror("variable deja declaree");
                       } else {
                         vars[result] = $4;
+                        printf("vars result=%d, result=%d\n", vars[result], result);
                       }
                     } 
+                    /*|tINT tNOM tAFFECT Operande tPV // peut prendre valeur de expr et operande
+                    { 
+                      printf("operande detectee\n");
+                      int result = ajouterSymbole($2, 0);
+                      if(result == -1) {
+                          yyerror("variable deja declaree");
+                      } else {
+                        vars[result] = $4;
+                        printf("vars result=%d, result=%d\n", vars[result], result);
+                      }
+                    } */
                     | tINT tNOM tPV 
                     { 
+                      printf("declaration\n");
                       int result = ajouterSymbole($2, 0);
                       if(result == -1) {
                           yyerror("variable deja declaree");
@@ -46,19 +63,35 @@ Variable :          tINT tNOM tAFFECT tENTIER tPV // peut prendre valeur de expr
                         vars[result] = 0;
                       }
                     } ;
+                    
 
 Affectation :       tNOM tAFFECT tENTIER tPV { printf("affectation de variable\n"); } 
                     | tNOM tAFFECT Expression tPV { printf("affectation de variable\n"); } ;
 
-Expression :        Operande tADD Operande /*{ printf("addition %d + %d", $1, $3); }*/ ;
+Expression :        Expression tADD Expression
+                    { 
+                      printf("addition=%d+%d=%d\n", $1, $3, $1 + $3); return ($1 + $3); 
+                    }
+                    |Operande;
 
-Operande :          tENTIER { return $$; }
-                    | tNOM { return $$; } ;
+Operande :          tENTIER
+                    | tNOM 
+                    { 
+                      printf("operande2 %s\n", $1);
+                      int index = chercherSymbole($1); 
+                      if (index == -1)
+                      {
+                        yyerror("variable non declaree");
+                      } else {
+                        printf("returned %d\n", vars[index]);
+                        return vars[index];
+                      }
+                    } ;
 
 /* Operateur :         tADD { $$ = ;} | tSOU | tMUL | tDIV ; */
 
 If :                tIF tPO Condition tPF tAO CorpsProgramme tAF { printf("IF lu\n"); }
-                    | If tELSE If { printf("IF ELSE lu\n"); } ;
+                    | If tELSE If { printf("IF ELSE lu\n"); } 
                     | If tELSE tAO CorpsProgramme tAF { printf("ELSE lu\n"); } ;
 
 While :             tWHI tPO Condition tPF tAO CorpsProgramme tAF { printf("WHILE lu\n"); } ;
@@ -74,6 +107,8 @@ void yyerror(char *s) { fprintf(stderr, "%s\n", s); }
 int main(void) {
   printf("Compilateur\n"); // yydebug = 1;
   initTableSymboles();
+  vars = malloc(sizeof(int) * TAILLE_TABLEAU);
   yyparse();
+  free(vars);
   return 0;
 }

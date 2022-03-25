@@ -30,7 +30,7 @@ int ajouterSymbole(char * nom, int prof);
 
 // retourne l'indice dans la table du symbole
 // recherché
-// retourne 1 si le symbole n'est pas présent
+// retourne -1 si le symbole n'est pas présent
 int chercherSymbole(char * nom);
 
 #endif

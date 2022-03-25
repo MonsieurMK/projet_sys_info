@@ -26,7 +26,7 @@ int ajouterSymbole(char * nom, int prof)
     printf("tableSymboles[%d]=%s\n", indice, tableSymboles[indice].nom);
     indice++;
 
-    return indice;
+    return indice-1;
 }
 
 int chercherSymbole(char * nom) 
