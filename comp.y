@@ -2,9 +2,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "ts.h"
+#include "ti.h"
 
-int * vars;
-int * stackPointer;
 void yyerror(char *s);
 %}
 
@@ -35,17 +34,19 @@ Constante :         tCONST tNOM tAFFECT tENTIER tPV { printf("declaration de con
 
 Variable :          tINT tNOM tAFFECT Expression tPV // peut prendre valeur de expr et operande
                     { 
-                      int result = ajouterSymbole($2, 0);
+                      int result = ajouterSymbole($2);
                       if(result == -1) {
                           yyerror("variable deja declaree");
                       } else {
                         //vars[result] = $4;
-                        printf("AFC %d %d\n", result * sizeof(int), $4);
+                        //printf("AFC %d %d\n", result * sizeof(int), $4);
+                        //ti_arithmetic_nb($4);
+                        //ti_affect_var($2);
                       }
                     } 
                     | tINT tNOM tPV 
                     { 
-                      int result = ajouterSymbole($2, 0);
+                      int result = ajouterSymbole($2);
                       if(result == -1) {
                           yyerror("variable deja declaree");
                       } else {
@@ -69,17 +70,17 @@ Affectation :       tNOM tAFFECT Expression tPV {
 Expression :        tPO Expression tADD Expression tPF
                     { 
                       //$$=$2+$4;
-                      printf("ADD %d %d %d\n", getAddresse($2), $2, $4);
+                      printf("ADD %d %d %d\n", $2, $2, $4);
                     }
                     |tPO Expression tSOU Expression tPF
                     {
                       //$$=$2-$4;
-                      printf("SOU %d %d %d\n", getAddresse($2), $2, $4));
+                      printf("SOU %d %d %d\n", $2, $2, $4);
                     }
                     |tPO Expression tMUL Expression tPF
                     {
                       //$$=$2*$4;
-                      printf("MUL %d %d %d\n", getAddresse($2), $2, $4));
+                      printf("MUL %d %d %d\n", $2, $2, $4);
                     }
                     |tPO Expression tDIV Expression tPF
                     {
@@ -88,53 +89,47 @@ Expression :        tPO Expression tADD Expression tPF
                         //$$=0;
                       } else {
                         //$$=$2/$4;
-                        printf("DIV %d %d %d\n", getAddresse($2), $2, $4));
+                        printf("DIV %d %d %d\n", $2, $2, $4);
                       }
                     }
 
                     |Expression tADD Expression
                     { 
                       //$$=$1+$3;
-                      printf("ADD %d %d %d\n", getAddresse($1), $1, $3);
+                      printf("ADD %d %d %d\n", $1, $1, $3);
                     }
                     | Expression tSOU Expression
                     {
                       //$$=$1-$3;
-                      printf("SOU %d %d %d\n", getAddresse($1), $1, $3));
+                      printf("SOU %d %d %d\n", $1, $1, $3);
                     }
-                    }
+                    
                     | Expression tMUL Expression
                     {
                       //$$=$1*$3;
-                      printf("MUL %d %d %d\n", getAddresse($1), $1, $3));
+                      printf("MUL %d %d %d\n", $1, $1, $3);
                     }
                     | Expression tDIV Expression
                     {
-                      if($4 == 0) {
+                      if($3 == 0) {
                         yyerror("division par zero\n");
                         //$$=0;
                       } else {
-                        //$$=$2/$4;
-                        printf("DIV %d %d %d\n", getAddresse($1), $1, $3));
+                        //$$=$1/$3;
+                        printf("DIV %d %d %d\n", $1, $1, $3);
                       }
                     }
                     |Operande;
 
 Operande :          tENTIER
-                    {
-                      // addresse temporaire (quelle addresse ? stack pointer ?)
-                      // TODO push and pop
-                      printf("STORE %d %d\n", stackPointer, $1)
+                    { 
+                      int index = ajouterSymboleTemp();
+                      printf("STORE %d %d\n", index, $1);
+                      $$ = index;
                     }
                     | tNOM 
                     { 
-                      /*int index = chercherSymbole($1); 
-                      if (index == -1)
-                      {
-                        yyerror("variable non declaree");
-                      } else {
-                        $$=vars[index];
-                      }*/
+                      
                       int addr = getAddresse($1);
                       if (addr == -1) {
                         yyerror("variable non declaree\n");
@@ -160,10 +155,10 @@ Condition :         tENTIER
 
 void yyerror(char *s) { fprintf(stderr, "%s\n", s); }
 int main(void) {
+
   printf("Compilateur\n"); // yydebug = 1;
   initTableSymboles();
-  vars = malloc(sizeof(int) * TAILLE_TABLEAU);
+  initStack();
   yyparse();
-  free(vars);
   return 0;
 }

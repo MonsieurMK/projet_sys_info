@@ -47,4 +47,11 @@ void augmenterProf();
 
 int reduireProf();
 
+int getDernierSymboleTemp();
+
+void ts_print();
+
+void ts_temp_print();
+
+
 #endif
