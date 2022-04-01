@@ -3,16 +3,19 @@
 void initTableSymboles() 
 {
     indice = 0;
+    indiceTemp = TAILLE_TABLEAU - 1;
     tableSymboles = malloc(sizeof(symbole) * TAILLE_TABLEAU);
+    prof = 0;
 }
 
 void libererTableSymboles()
 {
     free(tableSymboles);
     indice = 0;
+    indiceTemp = TAILLE_TABLEAU - 1;
 }
 
-int ajouterSymbole(char * nom, int prof) 
+int ajouterSymbole(char * nom) 
 {
     for (int i = 0; i < indice; i++)
     {
@@ -44,10 +47,34 @@ int chercherSymbole(char * nom)
 
 int getAddresse(char * nom)
 {
-    int indice = chercherSymbole(nom)
+    int indice = chercherSymbole(nom);
     if (indice == -1)
     {
         return -1;
     }
     return indice * sizeof(int);
 }
+
+int ajouterSymboleTemp()
+{
+    tableSymboles[indiceTemp]
+}
+
+int libererDernierSymboleTemp();
+
+void augmenterProf()
+{
+    prof++;
+}
+
+int reduireProf()
+{
+    if (prof <= 0)
+    {
+        return 1;
+    }
+    prof--;
+    return 0;
+}
+
+// TODO la ts est une pile, montante pour les variables et descendante pour les variables temporaires

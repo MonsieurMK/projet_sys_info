@@ -1,13 +1,17 @@
 #ifndef TABLE_SYMBOLES
 #define TABLE_SYMBOLES
 
-#define TAILLE_TABLEAU 10
+#define TAILLE_TABLEAU 20
 
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 
 int indice;
+
+int indiceTemp;
+
+int prof;
 
 typedef struct Symbole
 {
@@ -26,7 +30,7 @@ void libererTableSymboles();
 
 // ajoute un nouveau symbole à la table
 // retourne 1 si un symbole de meme nom est présent
-int ajouterSymbole(char * nom, int prof);
+int ajouterSymbole(char * nom);
 
 // retourne l'indice dans la table du symbole
 // recherché
@@ -34,5 +38,13 @@ int ajouterSymbole(char * nom, int prof);
 int chercherSymbole(char * nom);
 
 int getAddresse(char * nom);
+
+int ajouterSymboleTemp();
+
+int libererDernierSymboleTemp();
+
+void augmenterProf();
+
+int reduireProf();
 
 #endif
