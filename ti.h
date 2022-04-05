@@ -38,4 +38,6 @@ void ti_arithmetic_div();
 
 int ti_affect_var(char * nomVar);
 
+void ti_afficher_table();
+
 #endif

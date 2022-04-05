@@ -41,7 +41,7 @@ Variable :          tINT tNOM tAFFECT Expression tPV // peut prendre valeur de e
                         //vars[result] = $4;
                         //printf("AFC %d %d\n", result * sizeof(int), $4);
                         //ti_arithmetic_nb($4);
-                        //ti_affect_var($2);
+                        ti_affect_var($2);
                       }
                     } 
                     | tINT tNOM tPV 
@@ -160,5 +160,6 @@ int main(void) {
   initTableSymboles();
   initStack();
   yyparse();
+  ti_afficher_table();
   return 0;
 }

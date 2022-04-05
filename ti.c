@@ -9,7 +9,6 @@ void initStack()
     tableInstruct = malloc(sizeof(instruction) * NB_INSTRUCTIONS_MAX);
 }
 
-
 char getLast(){
     return tableInstruct[indice-1].nom;
 }
@@ -70,7 +69,7 @@ void ti_arithmetic_div(){
     insert("DIV",secondAddr,secondAddr,addr);
 }
 
-int ti_affect_var_last_temp(char * nomVar) 
+int ti_affect_var(char * nomVar) 
 {
     int addr = getAddrDernierSymboleTemp();
     int addrVar = chercherSymbole(nomVar);
@@ -83,4 +82,13 @@ int ti_affect_var_last_temp(char * nomVar)
     insert("AFC", addrVar, addr, 0);
 
     return 0;
+}
+
+void ti_afficher_table()
+{
+    printf("\n\nTable des instructions:\n");
+    for (int i = 0; i < indice; i++)
+    {
+        printf("%s\t%d\t%d\t%d\n", tableInstruct[i].nom, tableInstruct[i].arg1, tableInstruct[i].arg2, tableInstruct[i].arg3);
+    }
 }
