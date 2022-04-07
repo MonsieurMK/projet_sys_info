@@ -11,7 +11,7 @@ int indice;
 
 int indiceTemp;
 
-int prof;
+int currentProf;
 
 typedef struct Symbole
 {
@@ -52,6 +52,5 @@ int getDernierSymboleTemp();
 void ts_print();
 
 void ts_temp_print();
-
 
 #endif

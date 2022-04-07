@@ -6,7 +6,7 @@ void initTableSymboles()
     indice = 0;
     indiceTemp = TAILLE_TABLEAU - 1;
     tableSymboles = malloc(sizeof(symbole) * TAILLE_TABLEAU);
-    prof = 0;
+    currentProf = 0;
 }
 
 void libererTableSymboles()
@@ -19,6 +19,7 @@ void libererTableSymboles()
 
 int ajouterSymbole(char * nom) 
 {
+    //printf("nom=%s, prof=%d\n", nom, currentProf);
     if ((indice+1) == indiceTemp)
     {
         return -1;
@@ -26,14 +27,13 @@ int ajouterSymbole(char * nom)
     
     for (int i = 0; i < indice; i++)
     {
-        if (strcmp(nom, tableSymboles[i].nom) == 0 && tableSymboles[i].prof == prof)
+        if (strcmp(nom, tableSymboles[i].nom) == 0 && tableSymboles[i].prof == currentProf)
         {
             return -1;
         }
     }
     
-    tableSymboles[indice] = (symbole) { nom, prof };
-    //printf("tableSymboles[%d]=%s\n", indice, tableSymboles[indice].nom);
+    tableSymboles[indice] = (symbole) { nom, currentProf };
     indice++;
 
     return indice-1;
@@ -43,7 +43,7 @@ int chercherSymbole(char * nom)
 {
     for (int i = 0; i < indice; i++)
     {
-        if (strcmp(nom, tableSymboles[i].nom) == 0 && tableSymboles[i].prof == prof)
+        if (strcmp(nom, tableSymboles[i].nom) == 0 && tableSymboles[i].prof <= currentProf)
         {
             return i;
         }
@@ -70,12 +70,10 @@ int ajouterSymboleTemp()
     }
     
     char * buf = malloc(sizeof(char) * 6);
-    //snprintf(buf, 9, "tempvar%d", indiceTemp);
     sprintf(buf, "_tmp%d", indiceTemp);
-    //printf("buf=%s\n", buf);
 
     tableSymboles[indiceTemp].nom = buf;
-    tableSymboles[indiceTemp].prof = prof;
+    tableSymboles[indiceTemp].prof = currentProf;
     indiceTemp--;
 
     return indiceTemp+1;
@@ -91,16 +89,17 @@ int libererDernierSymboleTemp()
 
 void augmenterProf()
 {
-    prof++;
+    currentProf++;
+    //printf("currentProf=%d\n", currentProf);
 }
 
 int reduireProf()
 {
-    if (prof <= 0)
+    if (currentProf <= 0)
     {
         return 1;
     }
-    prof--;
+    currentProf--;
     return 0;
 }
 
@@ -113,7 +112,7 @@ void ts_print()
 {
     for (int i = 0; i < indice; i++)
     {
-        printf("tableSymboles[%d]=%s\n", i, tableSymboles[i].nom);
+        printf("tableSymboles[%d]=%s, prof=%d\n", i, tableSymboles[i].nom, tableSymboles[i].prof);
     }
 }
 

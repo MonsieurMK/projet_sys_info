@@ -36,7 +36,7 @@
 "*"	{ return tMUL; }
 "/"	{ return tDIV; }
 
-\/\/.*$ { return tCOMM; }
+\/\/.*$ {}
 
 "void" { return tVOID; }
 

@@ -15,12 +15,12 @@ typedef struct Instruction
     int arg3;
 } instruction;
 
-int indice;
+int indiceInstruction;
 instruction * tableInstruct;
 
 void initStack();
 
-char getLast();
+char * getLast();
 
 void freeStack();
 
@@ -39,5 +39,19 @@ void ti_arithmetic_div();
 int ti_affect_var(char * nomVar);
 
 void ti_afficher_table();
+
+int ti_inserer_jmp();
+
+int ti_inserer_jmpf(int addrCond);
+
+void ti_set_jmp(int addr, int ligne);
+
+void ti_set_jmpf(int addr, int ligne);
+
+int ti_get_nb_lignes_asm();
+
+void ti_arithmetic_eq();
+
+// faire affectation de variable
 
 #endif
