@@ -1,21 +1,24 @@
 %{
+#include "value.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "ts.h"
 #include "ti.h"
 
-typedef struct value {
-  int var1;
-  int var2;
-} value;
+// TODO gérer AND et OR
+
+extern FILE * yyin;
 
 void yyerror(char *s);
 %}
 
 %union { int entier; char * var; value val; }
-%token tMAIN tPO tPF tAO tAF tRET tPV
-%token tELSE tAND tOR tEGAL tINT tCONST 
-%token tVOID tAFFECT tSOU tADD tMUL tDIV
+%token tMAIN tPO tPF tAO tAF tPV
+%token tELSE tAND tOR tINT tCONST 
+%token tEGAL tINF tSUP
+%token tAFFECT tSOU tADD tMUL tDIV
+%token tPRINT tRET tVOID
 %token <entier> tENTIER
 %token <var> tNOM
 %token <entier> tIF
@@ -35,106 +38,100 @@ Main :              tMAIN tPO tPF tAO CorpsProgramme tAF;
 
 CorpsProgramme :    Instruction CorpsProgramme | Instruction ;
 
-Instruction :       Constante | Variable | Affectation | If | While ;
+Instruction :       Constante | Variable | Affectation | If | While | Print;
 
-Constante :         tCONST tNOM tAFFECT tENTIER tPV { printf("declaration de constante\n"); } ;
+Constante :         tCONST tNOM tAFFECT tENTIER tPV 
+                    { 
+                      int result = ajouterSymbole($2, 1);
+                      if (result == -1) {
+                        yyerror("Constante déjà déclarée");
+                        YYERROR;
+                      } else {
+                        ajouterSymboleTemp();
+                        ti_arithmetic_nb($4);
+                        
+                        ti_affect_var($2);
+                      }
+                    } ;
 
 Variable :          tINT tNOM tAFFECT Expression tPV // peut prendre valeur de expr et operande
                     {
-                      int result = ajouterSymbole($2);
-                      ts_print();
+                      int result = ajouterSymbole($2, 0);
                       if(result == -1) {
                           yyerror("variable deja declaree here");
                           YYERROR;
                       } else {
-                        //vars[result] = $4;
-                        //printf("AFC %d %d\n", result * sizeof(int), $4);
-                        //ti_arithmetic_nb($4);
                         ti_affect_var($2);
                       }
                     } 
                     | tINT tNOM tPV 
                     { 
-                      int result = ajouterSymbole($2);
+                      int result = ajouterSymbole($2, 0);
                       if(result == -1) {
                           yyerror("variable deja declaree");
+                          YYERROR;
                       } else {
-                        //vars[result] = 0;
-                        //printf("AFC %lu 0\n", result * sizeof(int)); //TODO
                         ti_affect_var($2);
                       }
                     } ;
                     
 
-Affectation :       tNOM tAFFECT Expression tPV { 
-                      //printf("affect expression\n");
-                      int result = chercherSymbole($1);
-                      if(result == -1) {
-                          yyerror("variable non declaree");
+Affectation :       tNOM tAFFECT Expression tPV {
+                      if (estConstante($1) == 1) {
+                        yyerror("impossible de modifier la valeur d'une constante");
+                        YYERROR;
                       } else {
-                        //vars[result] = $3;
-                        //printf("AFC %d %d\n", result * sizeof(int), $3);
-                        ti_affect_var($1);
+                        int result = chercherSymbole($1);
+                        if(result == -1) {
+                            yyerror("variable non declaree");
+                            YYERROR;
+                        } else {
+                          ti_affect_var($1);
+                        }
                       }
                     } ;
 
 Expression :        tPO Expression tADD Expression tPF
                     { 
-                      //$$=$2+$4;
-                      //printf("ADD %d %d %d\n", $2, $2, $4);
                       ti_arithmetic_add();
                     }
                     |tPO Expression tSOU Expression tPF
                     {
-                      //$$=$2-$4;
-                      //printf("SOU %d %d %d\n", $2, $2, $4);
                       ti_arithmetic_sub();
                     }
                     |tPO Expression tMUL Expression tPF
                     {
-                      //$$=$2*$4;
-                      //printf("MUL %d %d %d\n", $2, $2, $4);*
                       ti_arithmetic_mul();
                     }
                     |tPO Expression tDIV Expression tPF
                     {
                       if($4 == 0) {
                         yyerror("division par zero\n");
-                        //$$=0;
+                        YYERROR;
                       } else {
-                        //$$=$2/$4;
-                        //printf("DIV %d %d %d\n", $2, $2, $4);
                         ti_arithmetic_div();
                       }
                     }
 
                     |Expression tADD Expression
                     { 
-                      //$$=$1+$3;
-                      //printf("ADD %d %d %d\n", $1, $1, $3);
                       ti_arithmetic_add();
                     }
                     | Expression tSOU Expression
                     {
-                      //$$=$1-$3;
-                      //printf("SOU %d %d %d\n", $1, $1, $3);
                       ti_arithmetic_sub();
                     }
                     
                     | Expression tMUL Expression
                     {
-                      //$$=$1*$3;
-                      //printf("MUL %d %d %d\n", $1, $1, $3);
                       ti_arithmetic_mul();
                     }
                     | Expression tDIV Expression
                     {
                       if($3 == 0) {
                         yyerror("division par zero\n");
-                        //$$=0;
+                        YYERROR;
                       } else {
-                        //$$=$1/$3;
-                        //printf("DIV %d %d %d\n", $1, $1, $3);
                         ti_arithmetic_div();
                       }
                     }
@@ -144,18 +141,21 @@ Operande :          tENTIER
                     { 
                       ajouterSymboleTemp();
                       ti_arithmetic_nb($1);
-                      //printf("STORE %d %d\n", ind, $1);
                       $$ = $1;
                     }
                     | tNOM 
                     { 
                       // TODO PAS FINI
                       //int addr = getAddresse($1);
-                      int addr = ajouterSymboleTemp();
+                      //int addr = ajouterSymboleTemp();
                       //ti_arithmetic_nb()
                       //ti_arithmetic_nb(addr);
+                      int addr = chercherSymbole($1);
+                      //printf("addresse add=%d\n", addr);
+                      ti_arithmetic_var(addr);
                       if (addr == -1) {
                         yyerror("variable non declaree\n");
+                        YYERROR;
                       } else {
                         $$ = addr;
                       }
@@ -215,10 +215,25 @@ While :             tWHI tPO Condition tPF tAO
                       reduireProf();
                     } ;
 
+Print :             tPRINT tPO tNOM tPF tPV
+                    {
+                      ti_print($3);
+                    } ;
+
 Condition :         tENTIER 
                     | Operande tEGAL Operande
                     {
                       ti_arithmetic_eq();
+                      $$ = ti_get_nb_lignes_asm();
+                    }
+                    | Operande tINF Operande
+                    {
+                      ti_arithmetic_inf();
+                      $$ = ti_get_nb_lignes_asm();
+                    }
+                    | Operande tSUP Operande
+                    {
+                      ti_arithmetic_sup();
                       $$ = ti_get_nb_lignes_asm();
                     }
                     | Condition tAND Condition
@@ -226,13 +241,37 @@ Condition :         tENTIER
 
 %%
 
-void yyerror(char *s) { fprintf(stderr, "%s\n", s); }
-int main(void) {
+void yyerror(char *s) { fprintf(stderr, "%s\n", s); exit(1); }
 
-  printf("Compilateur\n"); // yydebug = 1;
+/*
+int main(int argc, char **argv)
+{
+  //printf("Compilateur\n"); // yydebug = 1;
   initTableSymboles();
   initStack();
+
   yyparse();
-  ti_afficher_table();
+
+  if (argc == 2) {
+    ti_exporter(argv[1]);
+  }
   return 0;
+}*/
+
+int main(int argc, char **argv)
+{
+  initTableSymboles();
+  initStack();
+
+  if (argc == 3) {
+    yyin = fopen(argv[1], "r");
+    FILE * out = fopen(argv[2], "w");
+
+    yyparse();
+
+    ti_exporter(out);
+  } else {
+    printf("Usage : %s <inFile> <outFile>\n", argv[0]);
+    exit(1);
+  }
 }

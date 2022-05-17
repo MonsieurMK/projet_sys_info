@@ -52,6 +52,14 @@ int ti_get_nb_lignes_asm();
 
 void ti_arithmetic_eq();
 
+void ti_arithmetic_inf();
+
+void ti_arithmetic_sup();
+
+int ti_print(char * nomVar);
+
+int ti_exporter(FILE * fichier);
+
 // faire affectation de variable
 
 #endif

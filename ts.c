@@ -17,7 +17,7 @@ void libererTableSymboles()
 }
 
 
-int ajouterSymbole(char * nom) 
+int ajouterSymbole(char * nom, int isConst) 
 {
     //printf("nom=%s, prof=%d\n", nom, currentProf);
     if ((indice+1) == indiceTemp)
@@ -33,7 +33,7 @@ int ajouterSymbole(char * nom)
         }
     }
     
-    tableSymboles[indice] = (symbole) { nom, currentProf };
+    tableSymboles[indice] = (symbole) { nom, currentProf, isConst };
     indice++;
 
     return indice-1;
@@ -50,6 +50,16 @@ int chercherSymbole(char * nom)
     }
     
     return -1;
+}
+
+int estConstante(char * nom)
+{
+    int i = chercherSymbole(nom);
+    if (i == -1)
+    {
+        return 0;
+    }
+    return tableSymboles[i].isConst;
 }
 
 int getAddresse(char * nom)
@@ -74,6 +84,7 @@ int ajouterSymboleTemp()
 
     tableSymboles[indiceTemp].nom = buf;
     tableSymboles[indiceTemp].prof = currentProf;
+    tableSymboles[indiceTemp].isConst = 0;
     indiceTemp--;
 
     return indiceTemp+1;
@@ -82,7 +93,7 @@ int ajouterSymboleTemp()
 int libererDernierSymboleTemp()
 {
     free(tableSymboles[indiceTemp+1].nom);
-    tableSymboles[indiceTemp+1] = (symbole) {"null", 0};
+    tableSymboles[indiceTemp+1] = (symbole) {"null", 0, 0};
     indiceTemp++;
     return indiceTemp;
 }

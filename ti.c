@@ -17,7 +17,7 @@ void freeStack(){
     for(int i = 0; i < indiceInstruction; i++){
         free(tableInstruct[i].nom);
     }
-    free(tableInstruct);
+    //free(tableInstruct);
     indiceInstruction = 0;
 }
 
@@ -39,6 +39,11 @@ void ti_arithmetic_nb(int v){
         exit(1);
     }
     insert("AFC",addr,v,0);
+}
+
+void ti_arithmetic_var(int addr) {
+    int addrResult = ajouterSymboleTemp();
+    insert("COP", addrResult, addr, 0);
 }
 
 void ti_arithmetic_add(){
@@ -101,7 +106,7 @@ int ti_inserer_jmp()
 
 int ti_inserer_jmpf(int addrCond)
 {
-    insert("JMPF", addrCond, 0, 0);
+    insert("JMF", addrCond, 0, 0);
     return indiceInstruction - 1;
 }
 
@@ -120,10 +125,67 @@ int ti_get_nb_lignes_asm()
     return indiceInstruction;
 }
 
+// TEST INVERSION ADDR1 ET ADDR2 SUR EQU, INF ET SUP
 void ti_arithmetic_eq()
 {
     int addr1 = getAddrDernierSymboleTemp();
     int addr2 = addr1 + 1;
     int addrResult = ajouterSymboleTemp();
-    insert("EQU", addrResult, addr1, addr2);
+    insert("EQU", addrResult, addr2, addr1);
 }
+
+void ti_arithmetic_inf()
+{
+    int addr1 = getAddrDernierSymboleTemp();
+    int addr2 = addr1 + 1;
+    int addrResult = ajouterSymboleTemp();
+    insert("INF", addrResult, addr2, addr1);
+}
+
+void ti_arithmetic_sup()
+{
+    int addr1 = getAddrDernierSymboleTemp();
+    int addr2 = addr1 + 1;
+    int addrResult = ajouterSymboleTemp();
+    insert("SUP", addrResult, addr2, addr1);
+}
+
+int ti_print(char * nomVar)
+{
+    int addr = chercherSymbole(nomVar);
+    if (addr == -1)
+    {
+        printf("Erreur: Variable %s non déclarée\n", nomVar);
+        return -1;
+    }
+
+    insert("PRI", addr, 0, 0);
+    return 0;
+}
+
+int ti_exporter(FILE * fichier)  
+{
+    /*
+    FILE * fichier;
+    char * nomFichierAsm = malloc(sizeof(char) * (strlen(nomFichier) + 5));
+    strcpy(nomFichierAsm, nomFichier);
+    strcat(nomFichierAsm, ".asm");
+    fichier = fopen(nomFichierAsm, "w");
+    */
+
+    for (int i = 0; i < indiceInstruction; i++)
+    {
+        fprintf(fichier, tableInstruct[i].nom, 3);
+        fprintf(fichier, "\t", 1);
+        fprintf(fichier, "%d", tableInstruct[i].arg1);
+        fprintf(fichier, "\t", 1);
+        fprintf(fichier, "%d", tableInstruct[i].arg2);
+        fprintf(fichier, "\t", 1);
+        fprintf(fichier, "%d", tableInstruct[i].arg3);
+        fprintf(fichier, "\n", 1);
+    }
+    
+    fclose(fichier);
+
+    return 0;
+}   

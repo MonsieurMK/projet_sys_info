@@ -17,6 +17,7 @@ typedef struct Symbole
 {
     char * nom;
     int prof;
+    int isConst;
     //char * type;
     //void * addr // pas besoin car on utilise l'indice du tableau
 } symbole;
@@ -30,7 +31,7 @@ void libererTableSymboles();
 
 // ajoute un nouveau symbole à la table
 // retourne 1 si un symbole de meme nom est présent
-int ajouterSymbole(char * nom);
+int ajouterSymbole(char * nom, int isConst);
 
 // retourne l'indice dans la table du symbole
 // recherché
