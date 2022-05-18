@@ -165,24 +165,17 @@ int ti_print(char * nomVar)
 
 int ti_exporter(FILE * fichier)  
 {
-    /*
-    FILE * fichier;
-    char * nomFichierAsm = malloc(sizeof(char) * (strlen(nomFichier) + 5));
-    strcpy(nomFichierAsm, nomFichier);
-    strcat(nomFichierAsm, ".asm");
-    fichier = fopen(nomFichierAsm, "w");
-    */
 
     for (int i = 0; i < indiceInstruction; i++)
     {
         fprintf(fichier, tableInstruct[i].nom, 3);
-        fprintf(fichier, "\t", 1);
+        fprintf(fichier, "\t");
         fprintf(fichier, "%d", tableInstruct[i].arg1);
-        fprintf(fichier, "\t", 1);
+        fprintf(fichier, "\t");
         fprintf(fichier, "%d", tableInstruct[i].arg2);
-        fprintf(fichier, "\t", 1);
+        fprintf(fichier, "\t");
         fprintf(fichier, "%d", tableInstruct[i].arg3);
-        fprintf(fichier, "\n", 1);
+        fprintf(fichier, "\n");
     }
     
     fclose(fichier);

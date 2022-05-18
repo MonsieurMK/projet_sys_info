@@ -24,6 +24,7 @@
 
 "return" { return tRET; }
 ";" { return tPV; }
+"," { return tVIR; }
 "else" { return tELSE;}
 
 "&&" { return tAND; }

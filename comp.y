@@ -6,15 +6,18 @@
 #include "ts.h"
 #include "ti.h"
 
-// TODO gérer AND et OR
+// TODO gérer AND et OR ? ou pas possible car
+// TODO gérer else if
+// TODO gérer déclarations multiples même ligne
 
 extern FILE * yyin;
 
+int yylex();
 void yyerror(char *s);
 %}
 
 %union { int entier; char * var; value val; }
-%token tMAIN tPO tPF tAO tAF tPV
+%token tMAIN tPO tPF tAO tAF tPV tVIR
 %token tELSE tAND tOR tINT tCONST 
 %token tEGAL tINF tSUP
 %token tAFFECT tSOU tADD tMUL tDIV
@@ -30,13 +33,16 @@ void yyerror(char *s);
 %left tADD tSOU
 %left tMUL tDIV
 
+%nonassoc tAO
+%nonassoc tELSE
+
 %%
 
 Compilateur :       Main { YYACCEPT; };
 
 Main :              tMAIN tPO tPF tAO CorpsProgramme tAF;
 
-CorpsProgramme :    Instruction CorpsProgramme | Instruction ;
+CorpsProgramme :    Instruction CorpsProgramme { } | Instruction { } ;
 
 Instruction :       Constante | Variable | Affectation | If | While | Print;
 
@@ -64,14 +70,38 @@ Variable :          tINT tNOM tAFFECT Expression tPV // peut prendre valeur de e
                         ti_affect_var($2);
                       }
                     } 
+                    | tINT tNOM tVIR DeclarationVariable
+                    {
+                      int result = ajouterSymbole($2, 0);
+                      if(result == -1) {
+                          yyerror("variable deja declaree");
+                          YYERROR;
+                      }
+                    }
                     | tINT tNOM tPV 
                     { 
                       int result = ajouterSymbole($2, 0);
                       if(result == -1) {
                           yyerror("variable deja declaree");
                           YYERROR;
-                      } else {
-                        ti_affect_var($2);
+                      }
+                    } ;
+
+DeclarationVariable :
+                    tNOM tPV
+                    {
+                      int result = ajouterSymbole($1, 0);
+                      if(result == -1) {
+                          yyerror("variable deja declaree");
+                          YYERROR;
+                      }
+                    }
+                    | tNOM tVIR DeclarationVariable
+                    {
+                      int result = ajouterSymbole($1, 0);
+                      if(result == -1) {
+                          yyerror("variable deja declaree");
+                          YYERROR;
                       }
                     } ;
                     
@@ -106,7 +136,7 @@ Expression :        tPO Expression tADD Expression tPF
                     |tPO Expression tDIV Expression tPF
                     {
                       if($4 == 0) {
-                        yyerror("division par zero\n");
+                        yyerror("erreur division par zero\n");
                         YYERROR;
                       } else {
                         ti_arithmetic_div();
@@ -128,12 +158,7 @@ Expression :        tPO Expression tADD Expression tPF
                     }
                     | Expression tDIV Expression
                     {
-                      if($3 == 0) {
-                        yyerror("division par zero\n");
-                        YYERROR;
-                      } else {
-                        ti_arithmetic_div();
-                      }
+                      ti_arithmetic_div();
                     }
                     |Operande;
 
@@ -145,13 +170,7 @@ Operande :          tENTIER
                     }
                     | tNOM 
                     { 
-                      // TODO PAS FINI
-                      //int addr = getAddresse($1);
-                      //int addr = ajouterSymboleTemp();
-                      //ti_arithmetic_nb()
-                      //ti_arithmetic_nb(addr);
                       int addr = chercherSymbole($1);
-                      //printf("addresse add=%d\n", addr);
                       ti_arithmetic_var(addr);
                       if (addr == -1) {
                         yyerror("variable non declaree\n");
@@ -160,8 +179,6 @@ Operande :          tENTIER
                         $$ = addr;
                       }
                     } ;
-
-/* Operateur :         tADD { $$ = ;} | tSOU | tMUL | tDIV ; */
 
 If :                tIF tPO Condition tPF tAO
                     { 
@@ -236,8 +253,10 @@ Condition :         tENTIER
                       ti_arithmetic_sup();
                       $$ = ti_get_nb_lignes_asm();
                     }
+                    /*
                     | Condition tAND Condition
                     | Condition tOR Condition ;
+                    */
 
 %%
 

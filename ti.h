@@ -28,6 +28,8 @@ void insert(char * nom, int arg1, int arg2, int arg3);
 
 void ti_arithmetic_nb(int v);
 
+void ti_arithmetic_var(int addr);
+
 void ti_arithmetic_add();
 
 void ti_arithmetic_sub();

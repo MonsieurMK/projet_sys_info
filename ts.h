@@ -38,6 +38,8 @@ int ajouterSymbole(char * nom, int isConst);
 // retourne -1 si le symbole n'est pas présent
 int chercherSymbole(char * nom);
 
+int estConstante(char * nom);
+
 int getAddresse(char * nom);
 
 int ajouterSymboleTemp();
@@ -47,6 +49,8 @@ int libererDernierSymboleTemp();
 void augmenterProf();
 
 int reduireProf();
+
+int getAddrDernierSymboleTemp();
 
 int getDernierSymboleTemp();
 

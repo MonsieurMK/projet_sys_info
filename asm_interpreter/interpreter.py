@@ -3,7 +3,6 @@ import sys
 
 MEMORY_SIZE = 20
 
-# returns the asm code as a list of the lines, each lines[i] is a list of the instruction and its arguments
 def get_asm_code(filename):
     f = open(filename, "r")
 
@@ -19,10 +18,9 @@ def get_asm_code(filename):
     return asm_lines
 
 def execute_asm(lines):
-    # memory
     memory = [0] * MEMORY_SIZE
+
     i = 0
-    #for i in range(len(lines)):
     while i < len(lines):
         if lines[i][0] == "ADD":
             memory[int(lines[i][1])] = memory[int(lines[i][2])] + memory[int(lines[i][3])]
@@ -65,7 +63,6 @@ def execute_asm(lines):
             print(memory[int(lines[i][1])])
 
         i += 1
-        #print("current instruction: ", lines[i], "memory=", memory)
 
 def main():
     if len(sys.argv) < 2:
