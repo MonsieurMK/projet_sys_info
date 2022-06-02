@@ -22,7 +22,6 @@
 "{" { return tAO;}
 "}" { return tAF; }
 
-"return" { return tRET; }
 ";" { return tPV; }
 "," { return tVIR; }
 "else" { return tELSE;}

@@ -59,6 +59,11 @@ def execute_asm(lines):
                 memory[int(lines[i][1])] = 0
         elif lines[i][0] == "PRI":
             print(memory[int(lines[i][1])])
+        elif lines[i][0] == "LOA":
+            memory[int(lines[i][1])] = memory[memory[int(lines[i][2])]]
+        elif lines[i][0] == "STR":
+            memory[memory[int(lines[i][1])]] = memory[int(lines[i][2])]
+            
 
         i += 1
 

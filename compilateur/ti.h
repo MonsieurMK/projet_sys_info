@@ -4,9 +4,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include "ts.h"
 
 #define NB_INSTRUCTIONS_MAX 50
 
+// structure représentant une instruction et ses arguments
 typedef struct Instruction
 {
     char * nom;
@@ -18,17 +20,26 @@ typedef struct Instruction
 int indiceInstruction;
 instruction * tableInstruct;
 
-void initStack();
+// initialise la table des instructions
+void initTable();
 
+// retourne le nom de la dernière instruction
 char * getLast();
 
-void freeStack();
+// libère la mémoire
+void libererTable();
 
+// insère une instruction
 void insert(char * nom, int arg1, int arg2, int arg3);
 
+// ajoute une instruction d'affectation 
 void ti_arithmetic_nb(int v);
 
 void ti_arithmetic_var(int addr);
+
+void ti_arithmetic_var_addr(int addr);
+
+void ti_arithmetic_pointer(int addr);
 
 void ti_arithmetic_add();
 
@@ -38,7 +49,9 @@ void ti_arithmetic_mul();
 
 void ti_arithmetic_div();
 
-int ti_affect_var(char * nomVar);
+int ti_affect_var(char * nomVar, Type type);
+
+int ti_affect_var_addr(char * nomVar);
 
 void ti_afficher_table();
 
@@ -61,6 +74,8 @@ void ti_arithmetic_sup();
 int ti_print(char * nomVar);
 
 void ti_print_nb(int nb);
+
+int ti_print_addr(char * nomPt);
 
 int ti_exporter(FILE * fichier);
 

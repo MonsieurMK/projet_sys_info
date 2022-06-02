@@ -17,9 +17,8 @@ void libererTableSymboles()
 }
 
 
-int ajouterSymbole(char * nom, int isConst) 
+int ajouterSymbole(char * nom, int isConst, Type type) 
 {
-    //printf("nom=%s, prof=%d\n", nom, currentProf);
     if ((indice+1) == indiceTemp)
     {
         return -1;
@@ -33,17 +32,19 @@ int ajouterSymbole(char * nom, int isConst)
         }
     }
     
-    tableSymboles[indice] = (symbole) { nom, currentProf, isConst };
+    tableSymboles[indice] = (symbole) { nom, currentProf, isConst, type };
     indice++;
 
     return indice-1;
 }
 
-int chercherSymbole(char * nom) 
+int chercherSymbole(char * nom, Type type) 
 {
     for (int i = 0; i < indice; i++)
     {
-        if (strcmp(nom, tableSymboles[i].nom) == 0 && tableSymboles[i].prof <= currentProf)
+        if (strcmp(nom, tableSymboles[i].nom) == 0 &&
+        tableSymboles[i].prof <= currentProf &&
+        tableSymboles[i].type == type)
         {
             return i;
         }
@@ -54,7 +55,7 @@ int chercherSymbole(char * nom)
 
 int estConstante(char * nom)
 {
-    int i = chercherSymbole(nom);
+    int i = chercherSymbole(nom, INT);
     if (i == -1)
     {
         return 0;
@@ -62,9 +63,9 @@ int estConstante(char * nom)
     return tableSymboles[i].isConst;
 }
 
-int getAddresse(char * nom)
+int getAddresse(char * nom, Type type)
 {
-    int indice = chercherSymbole(nom);
+    int indice = chercherSymbole(nom, type);
     if (indice == -1)
     {
         return -1;
@@ -85,6 +86,7 @@ int ajouterSymboleTemp()
     tableSymboles[indiceTemp].nom = buf;
     tableSymboles[indiceTemp].prof = currentProf;
     tableSymboles[indiceTemp].isConst = 0;
+    tableSymboles[indiceTemp].type = INT;
     indiceTemp--;
 
     return indiceTemp+1;
@@ -93,7 +95,7 @@ int ajouterSymboleTemp()
 int libererDernierSymboleTemp()
 {
     free(tableSymboles[indiceTemp+1].nom);
-    tableSymboles[indiceTemp+1] = (symbole) {"null", 0, 0};
+    tableSymboles[indiceTemp+1] = (symbole) {"null", 0, 0, INT};
     indiceTemp++;
     return indiceTemp;
 }
@@ -101,7 +103,6 @@ int libererDernierSymboleTemp()
 void augmenterProf()
 {
     currentProf++;
-    //printf("currentProf=%d\n", currentProf);
 }
 
 int reduireProf()
