@@ -16,15 +16,14 @@ void yyerror(char *s);
 
 %union { int entier; char * var; value val; }
 %token tMAIN tPO tPF tAO tAF tPV tVIR
-%token tELSE tAND tOR tINT tCONST 
+%token tELSE tINT tCONST 
 %token tEGAL tINF tSUP
 %token tAFFECT tSOU tADD tMUL tDIV
-%token tPRINT tRET tVOID tESP
+%token tPRINT tESP
 %token <entier> tENTIER
 %token <var> tNOM
 %token <entier> tIF
 %token <val> tWHI
-// removed expression and operande from below
 %type <entier> Expression Operande CorpsProgramme While Condition
 %type <val> If
 %start Compilateur

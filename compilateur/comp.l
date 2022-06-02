@@ -26,8 +26,6 @@
 "," { return tVIR; }
 "else" { return tELSE;}
 
-"&&" { return tAND; }
-"||" { return tOR; }
 "==" { return tEGAL; }
 "<" { return tINF; }
 ">" { return tSUP; }
