@@ -1,7 +1,7 @@
 #include "ts.h"
 #include <string.h>
 
-void initTableSymboles() 
+void ts_initTableSymboles() 
 {
     indice = 0;
     indiceTemp = TAILLE_TABLEAU - 1;
@@ -9,7 +9,7 @@ void initTableSymboles()
     currentProf = 0;
 }
 
-void libererTableSymboles()
+void ts_libererTableSymboles()
 {
     free(tableSymboles);
     indice = 0;
@@ -17,7 +17,7 @@ void libererTableSymboles()
 }
 
 
-int ajouterSymbole(char * nom, int isConst, Type type) 
+int ts_ajouterSymbole(char * nom, int isConst, Type type) 
 {
     if ((indice+1) == indiceTemp)
     {
@@ -38,7 +38,7 @@ int ajouterSymbole(char * nom, int isConst, Type type)
     return indice-1;
 }
 
-int chercherSymbole(char * nom, Type type) 
+int ts_chercherSymbole(char * nom, Type type) 
 {
     for (int i = 0; i < indice; i++)
     {
@@ -53,9 +53,9 @@ int chercherSymbole(char * nom, Type type)
     return -1;
 }
 
-int estConstante(char * nom)
+int ts_estConstante(char * nom)
 {
-    int i = chercherSymbole(nom, INT);
+    int i = ts_chercherSymbole(nom, INT);
     if (i == -1)
     {
         return 0;
@@ -63,9 +63,9 @@ int estConstante(char * nom)
     return tableSymboles[i].isConst;
 }
 
-int getAddresse(char * nom, Type type)
+int ts_getAddresse(char * nom, Type type)
 {
-    int indice = chercherSymbole(nom, type);
+    int indice = ts_chercherSymbole(nom, type);
     if (indice == -1)
     {
         return -1;
@@ -73,7 +73,7 @@ int getAddresse(char * nom, Type type)
     return indice * sizeof(int);
 }
 
-int ajouterSymboleTemp()
+int ts_ajouterSymboleTemp()
 {
     if ((indiceTemp-1) == indice)
     {
@@ -92,7 +92,7 @@ int ajouterSymboleTemp()
     return indiceTemp+1;
 }
 
-int libererDernierSymboleTemp()
+int ts_libererDernierSymboleTemp()
 {
     free(tableSymboles[indiceTemp+1].nom);
     tableSymboles[indiceTemp+1] = (symbole) {"null", 0, 0, INT};
@@ -100,12 +100,12 @@ int libererDernierSymboleTemp()
     return indiceTemp;
 }
 
-void augmenterProf()
+void ts_augmenterProf()
 {
     currentProf++;
 }
 
-int reduireProf()
+int ts_reduireProf()
 {
     if (currentProf <= 0)
     {
@@ -115,7 +115,7 @@ int reduireProf()
     return 0;
 }
 
-int getAddrDernierSymboleTemp()
+int ts_getAddrDernierSymboleTemp()
 {
     return indiceTemp+1;
 }

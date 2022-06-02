@@ -28,41 +28,41 @@ typedef struct Symbole
 symbole * tableSymboles;
 
 // initialise une table de symboles à un tableau vide
-void initTableSymboles();
+void ts_initTableSymboles();
 
 // vide une table des symboles et libère la mémoire
-void libererTableSymboles();
+void ts_libererTableSymboles();
 
 // ajoute un nouveau symbole à la table
 // retourne 1 si un symbole de meme nom est présent
-int ajouterSymbole(char * nom, int isConst, Type type);
+int ts_ajouterSymbole(char * nom, int isConst, Type type);
 
 // retourne l'indice dans la table du symbole
 // recherché
 // retourne -1 si le symbole n'est pas présent
-int chercherSymbole(char * nom, Type type);
+int ts_chercherSymbole(char * nom, Type type);
 
 // retourne 1 si la variable est une constante,
 // retourne 0 sinon
-int estConstante(char * nom);
+int ts_estConstante(char * nom);
 
 // retourne l'adresse (multipliée par 4) de la variable
-int getAddresse(char * nom, Type type);
+int ts_getAddresse(char * nom, Type type);
 
 // ajoute une variable temporaire à la table des symboles et retourne son adresse
-int ajouterSymboleTemp();
+int ts_ajouterSymboleTemp();
 
 // libère le dernier symbole temporaire utilisé
-int libererDernierSymboleTemp();
+int ts_libererDernierSymboleTemp();
 
 // augmente la profondeur courante du programme
-void augmenterProf();
+void ts_augmenterProf();
 
 // réduit la profondeur courante du programme
-int reduireProf();
+int ts_reduireProf();
 
 // retourne l'adresse du dernier symbole temporaire
-int getAddrDernierSymboleTemp();
+int ts_getAddrDernierSymboleTemp();
 
 // affiche les variables dans la table des symboles
 void ts_print();

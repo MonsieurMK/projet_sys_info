@@ -3,24 +3,21 @@
 #include "ti.h"
 #include "ts.h"
 
-void initTable()
+void ti_initTable()
 {
     indiceInstruction = 0;
     tableInstruct = malloc(sizeof(instruction) * NB_INSTRUCTIONS_MAX);
 }
 
-char * getLast(){
+char * ti_getLast(){
     return tableInstruct[indiceInstruction-1].nom;
 }
 
-void libererTable(){
-    for(int i = 0; i < indiceInstruction; i++){
-        free(tableInstruct[i].nom);
-    }
-    indiceInstruction = 0;
+void ti_libererTable(){
+    free(tableInstruct);
 }
 
-void insert(char * nom, int arg1, int arg2, int arg3)
+void ti_insert(char * nom, int arg1, int arg2, int arg3)
 {
     if (indiceInstruction == NB_INSTRUCTIONS_MAX)
     {
@@ -32,83 +29,83 @@ void insert(char * nom, int arg1, int arg2, int arg3)
 }
 
 void ti_arithmetic_nb(int v){
-    int addr = getAddrDernierSymboleTemp();
+    int addr = ts_getAddrDernierSymboleTemp();
     if(addr == -1){
         printf("Erreur: Pas assez de variables temporaires\n");
         exit(1);
     }
-    insert("AFC",addr,v,0);
+    ti_insert("AFC",addr,v,0);
 }
 
 void ti_arithmetic_var(int addr) {
-    int addrResult = ajouterSymboleTemp();
-    insert("COP", addrResult, addr, 0);
+    int addrResult = ts_ajouterSymboleTemp();
+    ti_insert("COP", addrResult, addr, 0);
 }
 
 void ti_arithmetic_var_addr(int addr) {
-    int addrResult = ajouterSymboleTemp();
-    insert("AFC", addrResult, addr, 0);
+    int addrResult = ts_ajouterSymboleTemp();
+    ti_insert("AFC", addrResult, addr, 0);
 }
 
 void ti_arithmetic_pointer(int addr) {
-    int addrResult = ajouterSymboleTemp();
-    insert("LOA", addrResult, addr, 0);
+    int addrResult = ts_ajouterSymboleTemp();
+    ti_insert("LOA", addrResult, addr, 0);
 }
 
 void ti_arithmetic_add(){
-    int addr = getAddrDernierSymboleTemp();
+    int addr = ts_getAddrDernierSymboleTemp();
     int secondAddr = addr + 1;
-    libererDernierSymboleTemp();
-    insert("ADD",secondAddr,secondAddr,addr);
+    ts_libererDernierSymboleTemp();
+    ti_insert("ADD",secondAddr,secondAddr,addr);
 }
 
 void ti_arithmetic_sub(){
-    int addr = getAddrDernierSymboleTemp();
+    int addr = ts_getAddrDernierSymboleTemp();
     int secondAddr = addr + 1;
-    libererDernierSymboleTemp();
-    insert("SUB",secondAddr,secondAddr,addr);
+    ts_libererDernierSymboleTemp();
+    ti_insert("SUB",secondAddr,secondAddr,addr);
 }
 
 void ti_arithmetic_mul(){
-    int addr = getAddrDernierSymboleTemp();
+    int addr = ts_getAddrDernierSymboleTemp();
     int secondAddr = addr + 1;
-    libererDernierSymboleTemp();
-    insert("MUL",secondAddr,secondAddr,addr);
+    ts_libererDernierSymboleTemp();
+    ti_insert("MUL",secondAddr,secondAddr,addr);
 }
 
 void ti_arithmetic_div(){
-    int addr = getAddrDernierSymboleTemp();
+    int addr = ts_getAddrDernierSymboleTemp();
     int secondAddr = addr + 1;
-    libererDernierSymboleTemp();
-    insert("DIV",secondAddr,secondAddr,addr);
+    ts_libererDernierSymboleTemp();
+    ti_insert("DIV",secondAddr,secondAddr,addr);
 }
 
 int ti_affect_var(char * nomVar, Type type) 
 {
-    int addr = getAddrDernierSymboleTemp();
-    int addrVar = chercherSymbole(nomVar, type);
+    int addr = ts_getAddrDernierSymboleTemp();
+    int addrVar = ts_chercherSymbole(nomVar, type);
     if (addrVar == -1) 
     {
         printf("Erreur: Variable %s non déclarée\n", nomVar);
         return -1;
     }
-    libererDernierSymboleTemp();
-    insert("COP", addrVar, addr, 0);
+    ts_libererDernierSymboleTemp();
+    ti_insert("COP", addrVar, addr, 0);
 
     return 0;
 }
 
 int ti_affect_var_addr(char * nomVar)
 {
-    int addr = getAddrDernierSymboleTemp();
-    int addrVar = chercherSymbole(nomVar, POINTER);
+    int addr = ts_getAddrDernierSymboleTemp();
+    int addrVar = ts_chercherSymbole(nomVar, POINTER);
     if (addrVar == -1) 
     {
         printf("Erreur: Variable %s non déclarée ou pas un pointeur\n", nomVar);
         return -1;
     }
-    libererDernierSymboleTemp();
-    insert("STR", addrVar, addr, 0);
+    ts_libererDernierSymboleTemp();
+    ti_insert("STR", addrVar, addr, 0);
 
     return 0;
 }
@@ -124,13 +121,13 @@ void ti_afficher_table()
 
 int ti_inserer_jmp()
 {
-    insert("JMP", 0, 0, 0);
+    ti_insert("JMP", 0, 0, 0);
     return indiceInstruction - 1;
 }
 
 int ti_inserer_jmpf(int addrCond)
 {
-    insert("JMF", addrCond, 0, 0);
+    ti_insert("JMF", addrCond, 0, 0);
     return indiceInstruction - 1;
 }
 
@@ -153,34 +150,34 @@ int ti_get_nb_lignes_asm()
 // test si il faut liberation temp
 void ti_arithmetic_eq()
 {
-    int addr1 = getAddrDernierSymboleTemp();
+    int addr1 = ts_getAddrDernierSymboleTemp();
     int addr2 = addr1 + 1;
-    int addrResult = ajouterSymboleTemp();
-    insert("EQU", addrResult, addr2, addr1);
+    int addrResult = ts_ajouterSymboleTemp();
+    ti_insert("EQU", addrResult, addr2, addr1);
 }
 
 void ti_arithmetic_inf()
 {
-    int addr1 = getAddrDernierSymboleTemp();
+    int addr1 = ts_getAddrDernierSymboleTemp();
     int addr2 = addr1 + 1;
-    int addrResult = ajouterSymboleTemp();
-    insert("INF", addrResult, addr2, addr1);
+    int addrResult = ts_ajouterSymboleTemp();
+    ti_insert("INF", addrResult, addr2, addr1);
 }
 
 void ti_arithmetic_sup()
 {
-    int addr1 = getAddrDernierSymboleTemp();
+    int addr1 = ts_getAddrDernierSymboleTemp();
     int addr2 = addr1 + 1;
-    int addrResult = ajouterSymboleTemp();
-    insert("SUP", addrResult, addr2, addr1);
+    int addrResult = ts_ajouterSymboleTemp();
+    ti_insert("SUP", addrResult, addr2, addr1);
 }
 
 int ti_print(char * nomVar)
 {
-    int addr = chercherSymbole(nomVar, INT);
+    int addr = ts_chercherSymbole(nomVar, INT);
     if (addr == -1)
     {
-        addr = chercherSymbole(nomVar, POINTER);
+        addr = ts_chercherSymbole(nomVar, POINTER);
         if (addr == -1)
         {
             printf("Erreur: Variable %s non declaree\n", nomVar);
@@ -188,31 +185,31 @@ int ti_print(char * nomVar)
         }
     }
 
-    insert("PRI", addr, 0, 0);
+    ti_insert("PRI", addr, 0, 0);
     return 0;
 }
 
 void ti_print_nb(int nb)
 {
-    ajouterSymboleTemp();
+    ts_ajouterSymboleTemp();
     ti_arithmetic_nb(nb);
-    int addr = getAddrDernierSymboleTemp();
-    insert("PRI", addr, 0, 0);
-    libererDernierSymboleTemp();
+    int addr = ts_getAddrDernierSymboleTemp();
+    ti_insert("PRI", addr, 0, 0);
+    ts_libererDernierSymboleTemp();
 }
 
 int ti_print_addr(char * nomPt) {
-    int addr = chercherSymbole(nomPt, POINTER);
+    int addr = ts_chercherSymbole(nomPt, POINTER);
     if (addr == -1)
     {
         printf("Erreur: Variable %s non declaree ou pas un pointeur\n", nomPt);
         return -1;
     }
     
-    int addrTemp = ajouterSymboleTemp();
-    insert("LOA", addrTemp, addr, 0);
-    insert("PRI", addrTemp, 0, 0);
-    libererDernierSymboleTemp();
+    int addrTemp = ts_ajouterSymboleTemp();
+    ti_insert("LOA", addrTemp, addr, 0);
+    ti_insert("PRI", addrTemp, 0, 0);
+    ts_libererDernierSymboleTemp();
     return 0;
 }
 

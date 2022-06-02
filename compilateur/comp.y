@@ -46,13 +46,13 @@ Instruction :       Constante | Variable | Affectation | If | While | Print;
 Constante :         // déclaration et affectation d'une constante de type entier
                     tCONST tNOM tAFFECT tENTIER tPV
                     { 
-                      int result = ajouterSymbole($2, 1, INT);
+                      int result = ts_ajouterSymbole($2, 1, INT);
                       if (result == -1) 
                       {
                         yyerror("Erreur: constante deja declaree");
                         YYERROR;
                       } else {
-                        ajouterSymboleTemp();
+                        ts_ajouterSymboleTemp();
                         ti_arithmetic_nb($4);
                         ti_affect_var($2, INT);
                       }
@@ -61,7 +61,7 @@ Constante :         // déclaration et affectation d'une constante de type entie
 Variable :          // déclaration et affectation d'une variable de type entier
                     tINT tNOM tAFFECT Expression tPV
                     {
-                      int result = ajouterSymbole($2, 0, INT);
+                      int result = ts_ajouterSymbole($2, 0, INT);
                       if(result == -1) 
                       {
                           yyerror("Erreur: variable deja declaree");
@@ -73,7 +73,7 @@ Variable :          // déclaration et affectation d'une variable de type entier
                     // déclaration de multiple variables de type entier
                     | tINT tNOM tVIR DeclarationVariable
                     {
-                      int result = ajouterSymbole($2, 0, INT);
+                      int result = ts_ajouterSymbole($2, 0, INT);
                       if(result == -1) 
                       {
                           yyerror("Erreur: variable deja declaree");
@@ -83,7 +83,7 @@ Variable :          // déclaration et affectation d'une variable de type entier
                     // déclaration d'une variable de type entier
                     | tINT tNOM tPV 
                     { 
-                      int result = ajouterSymbole($2, 0, INT);
+                      int result = ts_ajouterSymbole($2, 0, INT);
                       if(result == -1) 
                       {
                           yyerror("Erreur: variable deja declaree");
@@ -93,7 +93,7 @@ Variable :          // déclaration et affectation d'une variable de type entier
                     // déclaration d'une variable de type pointeur
                     | tINT tMUL tNOM tPV
                     {
-                      int result = ajouterSymbole($3, 0, POINTER);
+                      int result = ts_ajouterSymbole($3, 0, POINTER);
                       if (result == -1) {
                         yyerror("Erreur: variable deja declaree");
                         YYERROR;
@@ -102,12 +102,12 @@ Variable :          // déclaration et affectation d'une variable de type entier
                     // déclaration et affectation d'une variable de type pointeur
                     | tINT tMUL tNOM tAFFECT tESP tNOM tPV
                     {
-                      int result = ajouterSymbole($3, 0, POINTER);
+                      int result = ts_ajouterSymbole($3, 0, POINTER);
                       if (result == -1) {
                         yyerror("Erreur: variable deja declaree");
                         YYERROR;
                       } else {
-                        int addr = chercherSymbole($6, INT);
+                        int addr = ts_chercherSymbole($6, INT);
                         if (addr == -1) {
                           yyerror("Erreur: variable non declaree");
                           YYERROR;
@@ -122,7 +122,7 @@ DeclarationVariable :
                     // déclaration de variable utilisée pour les déclarations multiples
                     tNOM tPV
                     {
-                      int result = ajouterSymbole($1, 0, INT);
+                      int result = ts_ajouterSymbole($1, 0, INT);
                       if(result == -1) {
                           yyerror("Erreur: variable deja declaree");
                           YYERROR;
@@ -130,7 +130,7 @@ DeclarationVariable :
                     }
                     | tNOM tVIR DeclarationVariable
                     {
-                      int result = ajouterSymbole($1, 0, INT);
+                      int result = ts_ajouterSymbole($1, 0, INT);
                       if(result == -1) {
                           yyerror("Erreur: variable deja declaree");
                           YYERROR;
@@ -141,7 +141,7 @@ DeclarationVariable :
 Affectation :       // affectation d'une valeur à une variable déjà déclarée
                     tNOM tAFFECT Expression tPV 
                     {
-                      if (estConstante($1) == 1) {
+                      if (ts_estConstante($1) == 1) {
                         yyerror("Erreur: impossible de modifier la valeur d'une constante");
                         YYERROR;
                       } else {
@@ -158,7 +158,7 @@ Affectation :       // affectation d'une valeur à une variable déjà déclaré
                     // affectation de la valeur pointée par un pointeur
                     | tMUL tNOM tAFFECT Expression tPV
                     {
-                      if (estConstante($2) == 1) {
+                      if (ts_estConstante($2) == 1) {
                         yyerror("Erreur: impossible de modifier la valeur d'une constante");
                         YYERROR;
                       } else {
@@ -212,16 +212,16 @@ Operande :          // opérandes élémentaires formant des expressions
                     // entier
                     tENTIER
                     { 
-                      ajouterSymboleTemp();
+                      ts_ajouterSymboleTemp();
                       ti_arithmetic_nb($1);
                       $$ = $1;
                     }
                     // variable de type entier
                     | tNOM 
                     { 
-                      int addr = chercherSymbole($1, INT);
+                      int addr = ts_chercherSymbole($1, INT);
                       if (addr == -1) {
-                        addr = chercherSymbole($1, POINTER);
+                        addr = ts_chercherSymbole($1, POINTER);
                         if (addr == -1) {
                           yyerror("Erreur: variable non declaree");
                           YYERROR;
@@ -233,7 +233,7 @@ Operande :          // opérandes élémentaires formant des expressions
                     // valeur pointée par un pointeur
                     | tMUL tNOM
                     {
-                      int addr = chercherSymbole($2, POINTER);
+                      int addr = ts_chercherSymbole($2, POINTER);
                       if (addr == -1) {
                         yyerror("Erreur: variable non declaree ou pas un pointeur");
                         YYERROR;
@@ -244,13 +244,13 @@ Operande :          // opérandes élémentaires formant des expressions
 If :                // intruction conditionnelle
                     tIF tPO Condition tPF tAO
                     { 
-                      int addrCond = getAddrDernierSymboleTemp();
+                      int addrCond = ts_getAddrDernierSymboleTemp();
                       int ligne = ti_inserer_jmpf(addrCond);
-                      libererDernierSymboleTemp();
-                      libererDernierSymboleTemp();
-                      libererDernierSymboleTemp();
+                      ts_libererDernierSymboleTemp();
+                      ts_libererDernierSymboleTemp();
+                      ts_libererDernierSymboleTemp();
                       $1 = ligne;
-                      augmenterProf();
+                      ts_augmenterProf();
                     }
                     CorpsProgramme tAF
                     {
@@ -259,7 +259,7 @@ If :                // intruction conditionnelle
                       int ligne = ti_inserer_jmp();
                       //$$ = ligne;
                       $$ = (value) {ligne, current};
-                      reduireProf();
+                      ts_reduireProf();
                       ti_set_jmp(ligne, current+1);
                     }
                     // else
@@ -267,7 +267,7 @@ If :                // intruction conditionnelle
                     {
                       int current = ti_get_nb_lignes_asm();
                       ti_set_jmp($1.var1, current + 1);
-                      reduireProf();
+                      ts_reduireProf();
                     } tAF
                     // else if
                     | If tELSE If
@@ -279,11 +279,11 @@ If :                // intruction conditionnelle
 While :             // boucle
                     tWHI tPO Condition tPF tAO 
                     {
-                      int addrCond = getAddrDernierSymboleTemp();
+                      int addrCond = ts_getAddrDernierSymboleTemp();
                       int current = ti_get_nb_lignes_asm();
                       int ligneJmpf = ti_inserer_jmpf(addrCond);
                       $1 = (value) { current, ligneJmpf};
-                      augmenterProf();
+                      ts_augmenterProf();
                     }
                     CorpsProgramme tAF 
                     {
@@ -291,10 +291,10 @@ While :             // boucle
                       ti_set_jmp(ligne, $1.var1-2);
                       int current = ti_get_nb_lignes_asm();
                       ti_set_jmpf($1.var2, current + 1);
-                      libererDernierSymboleTemp();
-                      libererDernierSymboleTemp();
-                      libererDernierSymboleTemp();
-                      reduireProf();
+                      ts_libererDernierSymboleTemp();
+                      ts_libererDernierSymboleTemp();
+                      ts_libererDernierSymboleTemp();
+                      ts_reduireProf();
                     } ;
 
 Print :             // fonction d'affichage d'une valeur ou d'un entier
@@ -335,8 +335,8 @@ void yyerror(char *s) { fprintf(stderr, "%s\n", s); exit(1); }
 
 int main(int argc, char **argv)
 {
-  initTableSymboles();
-  initTable();
+  ts_initTableSymboles();
+  ti_initTable();
 
   if (argc == 3) {
     yyin = fopen(argv[1], "r");
@@ -350,6 +350,6 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  libererTableSymboles();
-  libererTable();
+  ts_libererTableSymboles();
+  ti_libererTable();
 }
