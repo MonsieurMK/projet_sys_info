@@ -1,0 +1,10 @@
+main() {
+    int x = 1;
+    int * p = &x;
+    
+    print(*p);
+
+    *p = -1;
+
+    print(x);
+}

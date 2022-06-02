@@ -1,0 +1,9 @@
+main()
+{
+    int compteur = 0;
+    while (compteur < 10)
+    {
+        compteur = compteur + 1;
+        print(compteur);
+    }
+}
