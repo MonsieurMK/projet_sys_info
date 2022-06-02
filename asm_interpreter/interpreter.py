@@ -35,15 +35,13 @@ def execute_asm(lines):
             memory[int(lines[i][1])] = memory[int(lines[i][2])]
         elif lines[i][0] == "AFC":
             memory[int(lines[i][1])] = int(lines[i][2])
-
-        elif lines[i][0] == "JMP":
+        elif lines[i][0] == "JMP" and (int(lines[i][1]) - 1) != i:
             i = int(lines[i][1]) - 1
             continue
-        elif lines[i][0] == "JMF":
+        elif lines[i][0] == "JMF" and (int(lines[i][1]) - 1) != i:
             if memory[int(lines[i][1])] == 0:
                 i = int(lines[i][2]) - 1
                 continue
-
         elif lines[i][0] == "SUP":
             if memory[int(lines[i][2])] > memory[int(lines[i][3])]:
                 memory[int(lines[i][1])] = 1

@@ -42,13 +42,13 @@
 "*"	{ return tMUL; }
 "/"	{ return tDIV; }
 
-\/\/.*$ {}
+"&"     { return tESP; }
 
-"void" { return tVOID; }
+\/\/.*$ {}
 
 "print" { return tPRINT; }
 
-[0-9]+ {
+-?[0-9]+ {
         yylval.entier = atoi(yytext);
         return tENTIER;
     }

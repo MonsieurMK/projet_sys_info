@@ -126,6 +126,7 @@ int ti_get_nb_lignes_asm()
 }
 
 // TEST INVERSION ADDR1 ET ADDR2 SUR EQU, INF ET SUP
+// test si il faut liberation temp
 void ti_arithmetic_eq()
 {
     int addr1 = getAddrDernierSymboleTemp();
@@ -161,6 +162,15 @@ int ti_print(char * nomVar)
 
     insert("PRI", addr, 0, 0);
     return 0;
+}
+
+void ti_print_nb(int nb)
+{
+    ajouterSymboleTemp();
+    ti_arithmetic_nb(nb);
+    int addr = getAddrDernierSymboleTemp();
+    insert("PRI", addr, 0, 0);
+    libererDernierSymboleTemp();
 }
 
 int ti_exporter(FILE * fichier)  

@@ -60,6 +60,8 @@ void ti_arithmetic_sup();
 
 int ti_print(char * nomVar);
 
+void ti_print_nb(int nb);
+
 int ti_exporter(FILE * fichier);
 
 // faire affectation de variable
