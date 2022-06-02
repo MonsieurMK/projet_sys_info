@@ -1,0 +1,172 @@
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Banc_Registre.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Banc_Registre
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Counter_16bit.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Compteur_8bits
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Data_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Data_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Instruction_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instruction_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/PIpeline.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Pipeline
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/UAL.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity UAL
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sim_1/new/Sim_Proc.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Sim_Proc
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/UAL.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity UAL
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Instruction_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instruction_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/UAL.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity UAL
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+ERROR: [VRFC 10-91] clk is not declared [/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd:137]
+ERROR: [VRFC 10-362] attribute event requires a static signal prefix [/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd:137]
+ERROR: [VRFC 10-2123] 0 definitions of operator "and" match here [/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd:137]
+ERROR: [VRFC 10-1504] unit behavioral ignored due to previous errors [/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd:40]
+INFO: [VRFC 10-240] VHDL file /home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd ignored due to errors
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+ERROR: [VRFC 10-1412] syntax error near Behavioral [/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd:108]
+ERROR: [VRFC 10-91] outbancreg is not declared [/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd:119]
+ERROR: [VRFC 10-283] actual of formal out port outqa cannot be an expression [/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd:119]
+ERROR: [VRFC 10-91] outual is not declared [/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd:125]
+ERROR: [VRFC 10-283] actual of formal out port out_s cannot be an expression [/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd:125]
+ERROR: [VRFC 10-91] inaddrmemdonnee is not declared [/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd:130]
+ERROR: [VRFC 10-91] outbancreg is not declared [/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd:140]
+ERROR: [VRFC 10-91] outual is not declared [/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd:147]
+ERROR: [VRFC 10-91] inaddrmemdonnee is not declared [/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd:161]
+ERROR: [VRFC 10-1504] unit behavioral ignored due to previous errors [/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd:40]
+INFO: [VRFC 10-240] VHDL file /home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd ignored due to errors
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Instruction_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instruction_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Instruction_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instruction_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sim_1/new/Sim_Proc.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Sim_Proc
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Counter_16bit.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Compteur_8bits
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sim_1/new/Sim_Proc.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Sim_Proc
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sim_1/new/Sim_Proc.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Sim_Proc
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Data_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Data_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Banc_Registre.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Banc_Registre
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Counter_16bit.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Compteur_8bits
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Data_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Data_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Instruction_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instruction_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Instruction_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instruction_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Counter_16bit.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Compteur_8bits
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Instruction_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instruction_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Instruction_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instruction_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Instruction_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instruction_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Instruction_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instruction_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sim_1/new/Sim_Proc.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Sim_Proc
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Instruction_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instruction_Memory
+ERROR: [VRFC 10-1412] syntax error near others [/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Instruction_Memory.vhd:46]
+ERROR: [VRFC 10-1504] unit behavioral ignored due to previous errors [/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Instruction_Memory.vhd:40]
+INFO: [VRFC 10-240] VHDL file /home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Instruction_Memory.vhd ignored due to errors
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Instruction_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instruction_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Instruction_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instruction_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/UAL.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity UAL
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Instruction_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instruction_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/UAL.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity UAL
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Instruction_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Instruction_Memory
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/PIpeline.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Pipeline
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/PIpeline.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Pipeline
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/AleaManager.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity AleaManager
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Banc_Registre.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Banc_Registre
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Counter_16bit.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Compteur_8bits
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/PIpeline.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Pipeline
+ERROR: [VRFC 10-91] freeze is not declared [/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/PIpeline.vhd:56]
+ERROR: [VRFC 10-1504] unit behavioral ignored due to previous errors [/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/PIpeline.vhd:47]
+INFO: [VRFC 10-240] VHDL file /home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/PIpeline.vhd ignored due to errors
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/AleaManager.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity AleaManager
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Banc_Registre.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Banc_Registre
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Counter_16bit.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Compteur_8bits
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/PIpeline.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Pipeline
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sim_1/new/Sim_Proc.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Sim_Proc
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/Counter_16bit.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Compteur_8bits
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/UAL.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity UAL
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/UAL.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity UAL
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/UAL.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity UAL
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/UAL.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity UAL
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/lenezet/Projet_System_Info/Projet_System_Info.srcs/sources_1/new/UAL.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity UAL
