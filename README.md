@@ -16,5 +16,5 @@ qui prend en entrée un code à compiler
 
 ## Credits
 
-LE NEZET Kilian
-PELLOUX Morgan
+- LE NEZET Kilian
+- PELLOUX Morgan
